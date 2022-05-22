@@ -17,17 +17,52 @@ morse[B]='-...'
 morse[C]='-.-.'
 morse[D]='-..'
 morse[E]='.'
+morse[F]='..-.'
+morse[G]='--.'
+morse[H]='....'
+morse[I]='..'
+morse[J]='.---'
+morse[K]='-.-'
+morse[L]='.-..'
+morse[M]='--'
+morse[N]='-.'
+morse[O]='---'
+morse[P]='.--.'
+morse[Q]='--.-'
+morse[R]='.-.'
+morse[S]='...'
+morse[T]='-'
+morse[U]='..-'
+morse[V]='...-'
+morse[X]='-..-'
+morse[Y]='-.--'
+morse[Z]='--..'
 
 ########
+
 
 if (("$#" == "0")); then
         echo "help"
         exit
 fi
 
+echo "$#"
+
 while (("$#" > 0)); do
-        if (($1 == "-h")); then
-                echo "help";
+        if ((! "$1" == "-h")); then
+                echo "help"
+                echo "$1"
+        else
+                foo="$1"
+                for ((i=0;i<${#foo};i++)); do
+                        c=${foo:$i:1}
+                        if ((! "$c" == "A"));then
+                                printf '       '
+                        else
+                                printf '%s ' "${morse[$c]}"
+                        fi
+                done
+                printf "\n"
         fi
         shift
 done
