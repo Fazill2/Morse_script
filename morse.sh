@@ -27,3 +27,7 @@ fi
 
 while (("$#" > 0)); do
         if (($1 == "-h")); then
+                echo "help";
+        fi
+        shift
+done
