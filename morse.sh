@@ -46,17 +46,19 @@ if (("$#" == "0")); then
         exit
 fi
 
-echo "$#"
-
 while (("$#" > 0)); do
-        if ((! "$1" == "-h")); then
+        if test "$1" = "-h"; then
                 echo "help"
+                echo "$1"
+        elif test "$1" = "-f"; then
+                shift
                 echo "$1"
         else
                 foo="$1"
                 for ((i=0;i<${#foo};i++)); do
                         c=${foo:$i:1}
-                        if ((! "$c" == "A"));then
+                        c=${c^^}
+                        if test "$c" = " ";then
                                 printf '       '
                         else
                                 printf '%s ' "${morse[$c]}"
