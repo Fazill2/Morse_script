@@ -39,8 +39,6 @@ morse[Y]='-.--'
 morse[Z]='--..'
 
 ########
-
-
 if (("$#" == "0")); then
         echo "help"
         exit
@@ -53,6 +51,7 @@ while (("$#" > 0)); do
         elif test "$1" = "-t"; then
                 shift
                 filename="$1"
+                printf '' | tee "$filename" 2> /dev/null
         else
                 foo="$1"
                 if test "$foo" = "-f"; then
