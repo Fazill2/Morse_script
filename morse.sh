@@ -37,17 +37,24 @@ morse[V]='...-'
 morse[X]='-..-'
 morse[Y]='-.--'
 morse[Z]='--..'
-
 ########
+
 if (("$#" == "0")); then
-        echo "help"
+        echo "Usage: ./morse.sh [OPTION]... [TEXT]..."
+		echo ""
+		echo "-h		help"
+		echo "-t [FILENAME]		save output to chosen file"
+		echo "-f [FILENAME]		take input from chosen file"
         exit
 fi
 filename=""
 while (("$#" > 0)); do
         if test "$1" = "-h"; then
-                echo "help"
-                echo "$1"
+                echo "Usage: ./morse.sh [OPTION]... [TEXT]..."
+				echo ""
+				echo "-h			help"
+				echo "-t [FILENAME]		save output to chosen file"
+				echo "-f [FILENAME]		take input from chosen file"
         elif test "$1" = "-t"; then
                 shift
                 filename="$1"
@@ -67,7 +74,7 @@ while (("$#" > 0)); do
                         c=${foo:$i:1}
                         c=${c^^}
                         if test "$c" = " ";then
-                                printf '       '
+                                printf '       ' | tee -a "$filename" 2> /dev/null
                         else
                                 printf '%s ' "${morse[$c]}" | tee -a "$filename" 2> /dev/null
                         fi
