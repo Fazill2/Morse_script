@@ -84,6 +84,12 @@ while (("$#" > 0)); do
 			echo "Could not open the file"
 			input_from_file=""
 		fi
+	elif test "$1" = "-c"; then
+		shift
+		c=$1
+		c=${c^^}
+		morse[$c]="$2"
+		shift 2
 	fi
         shift
 done
