@@ -39,18 +39,34 @@ morse[Y]='-.--'
 morse[Z]='--..'
 ########
 
+function convert_to_morse()
+{
+	foo="$1"
+	filename="$2"
+        for ((i=0;i<${#foo};i++)); do
+       		c=${foo:$i:1}
+		c=${c^^}
+		if test "$c" = " ";then
+			printf '       ' | tee -a "$filename" 2> /dev/null
+		else
+			printf '%s ' "${morse[$c]}" | tee -a "$filename" 2> /dev/null
+		fi
+	done
+	printf "\n" | tee -a "$filename" 2> /dev/null
+}
+
+
 if (("$#" == "0")); then
-        echo "Usage: ./morse.sh [OPTION]... [TEXT]..."
+        echo "Usage: ./morse.sh [OPTION]..."
 		echo ""
-		echo "-h		help"
+		echo "-h			help"
 		echo "-t [FILENAME]		save output to chosen file"
 		echo "-f [FILENAME]		take input from chosen file"
-        exit
 fi
 filename=""
 while (("$#" > 0)); do
         if test "$1" = "-h"; then
-                echo "Usage: ./morse.sh [OPTION]... [TEXT]..."
+                echo "Usage: ./morse.sh [OPTION]..."
 				echo ""
 				echo "-h			help"
 				echo "-t [FILENAME]		save output to chosen file"
@@ -59,27 +75,20 @@ while (("$#" > 0)); do
                 shift
                 filename="$1"
                 printf '' | tee "$filename" 2> /dev/null
-        else
-                foo="$1"
-                if test "$foo" = "-f"; then
-                        shift
-                        if test -r "$1"; then
-                                foo=$(cat "$1")
-                        else
-                                echo "Could not open the file"
-                                foo=""
-                        fi
-                fi
-                for ((i=0;i<${#foo};i++)); do
-                        c=${foo:$i:1}
-                        c=${c^^}
-                        if test "$c" = " ";then
-                                printf '       ' | tee -a "$filename" 2> /dev/null
-                        else
-                                printf '%s ' "${morse[$c]}" | tee -a "$filename" 2> /dev/null
-                        fi
-                done
-                printf "\n" | tee -a "$filename" 2> /dev/null
-        fi
+	elif test "$1" = "-f"; then
+		shift
+		if test -r "$1"; then
+			foo=$(cat "$1")
+			convert_to_morse "$foo" "$filename"
+		else
+			echo "Could not open the file"
+			foo=""
+		fi
+	fi
         shift
+done
+read foo
+while test "$foo" != ""; do
+	convert_to_morse "$foo" "$filename"
+	read foo
 done
