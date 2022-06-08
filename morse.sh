@@ -62,6 +62,7 @@ if (("$#" == "0")); then
 		echo "-h			help"
 		echo "-t [FILENAME]		save output to chosen file"
 		echo "-f [FILENAME]		read input from chosen file"
+		echo "-c [CHAR] [MORSE_CODE]	changes the morse code representation of a chosen character"		
 fi
 filename=""
 while (("$#" > 0)); do
@@ -71,6 +72,7 @@ while (("$#" > 0)); do
 		echo "-h			help"
 		echo "-t [FILENAME]		save output to chosen file"
 		echo "-f [FILENAME]		read input from chosen file"
+		echo "-c [CHAR] [MORSE_CODE]	changes the morse code representation of a chosen character"	
         elif test "$1" = "-t"; then
                 shift
                 filename="$1"
