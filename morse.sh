@@ -45,7 +45,7 @@ function convert_to_morse()
 	filename="$2"
         for ((i=0;i<${#text};i++)); do
        	c=${text:$i:1}
-		c=${c^^}
+		c=${c^^}  # changes c to the upper version of it
 		if test "$c" = " ";then
 			printf '   ' | tee -a "$filename" 2> /dev/null
 		else
