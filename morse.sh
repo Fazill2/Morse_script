@@ -95,8 +95,9 @@ while (("$#" > 0)); do
 	fi
         shift
 done
-read input_from_stdin
-while test "$input_from_stdin" != ""; do
+while read input_from_stdin; do
+	if [[ -z  "$input_from_stdin" ]]; then
+		continue
+	fi
 	convert_to_morse "$input_from_stdin" "$filename"
-	read input_from_stdin
 done
